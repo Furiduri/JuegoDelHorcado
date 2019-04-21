@@ -25,7 +25,7 @@ import java.util.RandomAccess;
 public class Start_Game extends AppCompatActivity {
     public LinearLayout ContentWord;
     public ImageView life1,life2,life3;
-    public TextView lblError;
+    public TextView lblError, lblLife,lblMSG;
     public String[] Palabras;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,8 @@ public class Start_Game extends AppCompatActivity {
         life3 = (ImageView)findViewById(R.id.life3);
         ContentWord = (LinearLayout)findViewById(R.id.ContentWord);
         lblError = (TextView)findViewById(R.id.lblError);
+        lblLife = (TextView)findViewById(R.id.lblLife) ;
+        lblMSG = (TextView)findViewById(R.id.lblMSG);
         ArrayList<ObjPalabra> lista = new ArrayList<ObjPalabra>();
         lista.add(new ObjPalabra(1,"Hola Mundo",2));
         lista.add(new ObjPalabra(2,"Furiduri",1));
@@ -90,17 +92,26 @@ public class Start_Game extends AppCompatActivity {
                 if (status) {
                     isWiner();
                 }else{
-                    if(life1.getContentDescription().toString() == "1"){
-                        life1.setContentDescription("0");
-                        life1.setImageResource(R.drawable.ic_death);
-                    }else
-                    if(life2.getContentDescription().toString() == "1"){
-                        life2.setContentDescription("0");
-                        life2.setImageResource(R.drawable.ic_death);
-                    }else
-                    if(life3.getContentDescription().toString() == "1"){
-                        life3.setContentDescription("0");
-                        life3.setImageResource(R.drawable.ic_death);
+                    switch (lblLife.getText().toString()){
+                        case "3":
+                            lblLife.setText("2");
+                            life1.setImageResource(R.drawable.ic_death);
+                            break;
+                        case "2":
+                            lblLife.setText("1");
+                            life2.setImageResource(R.drawable.ic_death);
+                            break;
+                        case "1":
+                            lblLife.setText("0");
+                            life3.setImageResource(R.drawable.ic_death);
+                            lblMSG.setVisibility(View.VISIBLE);
+                            break;
+                        case "0":
+                            lblLife.setText("Death");
+                            Intent miItent = new Intent(this, Game_Over.class);
+                            startActivity(miItent);
+                            finish();
+                            break;
                     }
                 }
             }
