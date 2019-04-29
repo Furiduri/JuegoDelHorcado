@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Juego del Orcado</string>
+    <string name="app_name">Adivina la palabra!</string>
+    <string name="about_Web"><a href='http://gcatcode.com'>GcatCode</a></string>
 </resources>

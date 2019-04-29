@@ -2,7 +2,9 @@ package com.example.GameHangman;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -21,16 +23,21 @@ import com.example.GameHangman.Entidades.ObjPalabra;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.RandomAccess;
+import java.util.Timer;
 
 public class Start_Game extends AppCompatActivity {
     public LinearLayout ContentWord;
     public ImageView life1,life2,life3;
-    public TextView lblError, lblLife,lblMSG;
+    public TextView lblError, lblLife,lblMSG, lblTime, lblLevel;
     public String[] Palabras;
+    public EditText txtLetra;
+    public Intent IntentGame_Over ;
+    public CountDownTimer Timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start__game);
+        //Objetos en pantalla
         life1 = (ImageView)findViewById(R.id.life1);
         life2 = (ImageView)findViewById(R.id.life2);
         life3 = (ImageView)findViewById(R.id.life3);
@@ -38,6 +45,12 @@ public class Start_Game extends AppCompatActivity {
         lblError = (TextView)findViewById(R.id.lblError);
         lblLife = (TextView)findViewById(R.id.lblLife) ;
         lblMSG = (TextView)findViewById(R.id.lblMSG);
+        lblTime = (TextView) findViewById(R.id.lblTime);
+        lblLevel = (TextView) findViewById(R.id.lblDificultad);
+        txtLetra = (EditText) findViewById(R.id.txtLetra);
+
+        IntentGame_Over = new Intent(this, Game_Over.class);
+        //Palabras
         ArrayList<ObjPalabra> lista = new ArrayList<ObjPalabra>();
         lista.add(new ObjPalabra(1,"Hola Mundo",2));
         lista.add(new ObjPalabra(2,"Furiduri",1));
@@ -47,7 +60,7 @@ public class Start_Game extends AppCompatActivity {
 
         int palabraID = new Random().nextInt(lista.size());
         Palabras = lista.get(palabraID).getPalabra().toUpperCase().split(" ");
-
+        SetLevel(lista.get(palabraID).getNivel());
         //Muestra los espacios de la palabra
         for(String palabra : Palabras){
             char[] letras = palabra.toCharArray();
@@ -65,12 +78,35 @@ public class Start_Game extends AppCompatActivity {
                 lblBlank.setText("      ");
             }
         }
+        //Strat time
+        StartTime();
+    }
+
+    private void SetLevel(Integer nivel) {
+        switch (nivel){
+            case 1:
+                lblLevel.setText("Facil");
+                lblLevel.setTextColor(Color.BLUE);
+                break;
+            case 2:
+                lblLevel.setText("Medio");
+                lblLevel.setTextColor(Color.GREEN);
+                break;
+            case 3:
+                lblLevel.setText("Dificil");
+                lblLevel.setTextColor(Color.RED);
+                break;
+                default:
+                    lblLevel.setText("Error");
+                    lblLevel.setTextColor(Color.YELLOW);
+                    break;
+        }
     }
 
     //Que exista la letra
     public void validate(View view){
-        if(view.getId() == R.id.btnChek){
-            EditText txtLetra = (EditText)findViewById(R.id.txtLetra);
+        if((view.getId() == R.id.btnChek || view.getId() == R.id.txtLetra)
+            && !txtLetra.getText().toString().isEmpty()){
             char chart = txtLetra.getText().charAt(0);
             chart = Character.toUpperCase(chart);
             boolean status = false;
@@ -108,8 +144,7 @@ public class Start_Game extends AppCompatActivity {
                             break;
                         case "0":
                             lblLife.setText("Death");
-                            Intent miItent = new Intent(this, Game_Over.class);
-                            startActivity(miItent);
+                            startActivity(IntentGame_Over);
                             finish();
                             break;
                     }
@@ -133,10 +168,34 @@ public class Start_Game extends AppCompatActivity {
             }
         }
         if(!status){
-            Intent miItent = new Intent(this, Winer.class);
-            startActivity(miItent);
+            //Parametros por ganar
+            Intent IntentWiner = new Intent(this, Winer.class);
+            IntentWiner.putExtra("LEVEL",(String) lblLevel.getText());
+            IntentWiner.putExtra("LIFE",(String) lblLife.getText());
+            IntentWiner.putExtra("TIME",(String) lblTime.getText());
+            startActivity(IntentWiner);
+            Timer.cancel();
             finish();
         }
     }
+
+    public void StartTime(){
+        Timer = new CountDownTimer(50000,1000){
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                lblTime.setText(String.valueOf(millisUntilFinished / 1000));
+            }
+
+            @Override
+            public void onFinish() {
+                lblLife.setText("Tiempo!");
+                startActivity(IntentGame_Over);
+                finish();
+            }
+        };
+        Timer.start();
+    }
+
 }
 

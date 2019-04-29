@@ -1,6 +1,7 @@
 package com.example.GameHangman;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btnStart:
                 Intent miItent = new Intent(this, Start_Game.class);
                 startActivity(miItent);
+                break;
+            case R.id.imgLogo:
+                Uri uri = Uri.parse("http://gcatcode.com");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
                 break;
         }
     }
