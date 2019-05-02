@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btnStart:
                 Intent StartGame = new Intent(this, Start_Game.class);
                 startActivity(StartGame);
-                finish();
                 break;
             case R.id.imgLogo:
                 Uri uri = Uri.parse("http://gcatcode.com");
@@ -33,12 +32,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.btnDiccionary:
                 Intent Diccionary = new Intent(this, CRUDPalabras.class);
                 startActivity(Diccionary);
-                finish();
                 break;
             case  R.id.btnScore:
                 Intent ScoreView = new Intent(this, Scores.class);
                 startActivity(ScoreView);
-                finish();
                 break;
                 default:
         }

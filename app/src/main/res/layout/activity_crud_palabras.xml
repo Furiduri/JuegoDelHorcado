@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CRUDPalabras" android:accessibilityPaneTitle="Diccionario">
+    android:accessibilityPaneTitle="Diccionario"
+    android:background="@color/colorAccent"
+    android:foregroundGravity="fill_horizontal"
+    tools:context=".CRUDPalabras">
 
     <TextView
         android:id="@+id/textView10"
@@ -15,10 +18,10 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="24dp"
         android:text="Nueva Palabra"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/txtPalabra"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,6 +74,7 @@
             android:layout_weight="1"
             android:text="Facil"
             android:textColor="#009688"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <RadioButton
@@ -80,6 +84,7 @@
             android:layout_weight="1"
             android:text="Normal"
             android:textColor="#4CAF50"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <RadioButton
@@ -89,6 +94,7 @@
             android:layout_weight="4"
             android:text="Dificil"
             android:textColor="#F44336"
+            android:textSize="18sp"
             android:textStyle="bold" />
     </RadioGroup>
 
@@ -125,7 +131,7 @@
         android:layout_marginBottom="8dp"
         android:text="Palabras"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

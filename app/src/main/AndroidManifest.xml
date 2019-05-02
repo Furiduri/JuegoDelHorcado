@@ -21,8 +21,7 @@
             android:name=".Winer"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".Start_Game"
-            android:parentActivityName=".MainActivity" />
+            android:name=".Start_Game" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
