@@ -5,11 +5,17 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.GameHangman.Utilidades.Utilidades;
 
 public class Winer extends AppCompatActivity {
     public Intent miItent;
     public TextView lblLevel, lblLife, lblTime, lblTotal;
+    public EditText txtName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +25,7 @@ public class Winer extends AppCompatActivity {
         lblLife = (TextView)findViewById(R.id.lblLife);
         lblTime = (TextView)findViewById(R.id.lblTime);
         lblTotal = (TextView)findViewById(R.id.lblTotal);
+        txtName =(EditText) findViewById(R.id.txtName);
         //Muestra el puntaje
         lblLevel.setText(getIntent().getStringExtra("LEVEL"));
         lblLife.setText(getIntent().getStringExtra("LIFE"));
@@ -68,7 +75,30 @@ public class Winer extends AppCompatActivity {
                 finish();
                 break;
                 default:
+        }
+    }
 
+    //Guarda el score del jugador
+    public void fnSaveScore( View view){
+        if(!txtName.getText().toString().isEmpty()){
+            String MSG = Utilidades.AddNewScore(txtName.getText().toString(),
+                    lblTotal.getText().toString(),
+                    lblLife.getText().toString(),
+                    lblLevel.getText().toString(),
+                    getIntent().getStringExtra("PALABRA").toUpperCase(),
+                    lblTime.getText().toString(),this);
+            if(!MSG.isEmpty()){
+                Toast.makeText(getApplicationContext(),MSG
+                        ,Toast.LENGTH_SHORT).show();
+                view.setEnabled(false);
+                txtName.setEnabled(false);
+            }else{
+                Toast.makeText(getApplicationContext(),"Error al guardar la puntuacion"
+                        ,Toast.LENGTH_SHORT).show();
+            }
+        }else {
+            Toast.makeText(getApplicationContext(),"Favor de escribir primero tu nombre"
+                    ,Toast.LENGTH_SHORT).show();
         }
     }
 }

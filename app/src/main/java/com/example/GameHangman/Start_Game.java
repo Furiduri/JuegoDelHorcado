@@ -1,5 +1,6 @@
 package com.example.GameHangman;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.GameHangman.Entidades.ObjPalabra;
+import com.example.GameHangman.Utilidades.Utilidades;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -28,10 +30,10 @@ import java.util.Timer;
 public class Start_Game extends AppCompatActivity {
     public LinearLayout ContentWord;
     public ImageView life1,life2,life3;
-    public TextView lblError, lblLife,lblMSG, lblTime, lblLevel;
+    public TextView lblError, lblLife,lblMSG, lblTime, lblLevel, lblPalabra;
     public String[] Palabras;
     public EditText txtLetra;
-    public Intent IntentGame_Over ;
+    public Intent IntentGame_Over, IntentHOME ;
     public CountDownTimer Timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,19 +50,25 @@ public class Start_Game extends AppCompatActivity {
         lblTime = (TextView) findViewById(R.id.lblTime);
         lblLevel = (TextView) findViewById(R.id.lblDificultad);
         txtLetra = (EditText) findViewById(R.id.txtLetra);
+        lblPalabra = (TextView) findViewById(R.id.lblPalabra);
 
         IntentGame_Over = new Intent(this, Game_Over.class);
+        IntentHOME = new Intent(this,MainActivity.class);
         //Palabras
-        ArrayList<ObjPalabra> lista = new ArrayList<ObjPalabra>();
-        lista.add(new ObjPalabra(1,"Hola Mundo",2));
-        lista.add(new ObjPalabra(2,"Furiduri",1));
-        lista.add(new ObjPalabra(3,"Platano",1));
-        lista.add(new ObjPalabra(4,"La Vida Es Muy Bella",3));
+        ArrayList<ObjPalabra> listaPalabras = new ArrayList<ObjPalabra>();
+        listaPalabras = Utilidades.GET_Palabras(this);
+        if(listaPalabras.isEmpty()){
+            startActivity(IntentHOME);
+            Toast.makeText(getApplicationContext(),
+                    "No hay datos de palabras para jugar", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
 
-
-        int palabraID = new Random().nextInt(lista.size());
-        Palabras = lista.get(palabraID).getPalabra().toUpperCase().split(" ");
-        SetLevel(lista.get(palabraID).getNivel());
+        int palabraID = new Random().nextInt(listaPalabras.size());
+        lblPalabra.setText(listaPalabras.get(palabraID).getPalabra().toUpperCase());
+        Palabras = listaPalabras.get(palabraID).getPalabra().toUpperCase().split(" ");
+        SetLevel(listaPalabras.get(palabraID).getNivel());
         //Muestra los espacios de la palabra
         for(String palabra : Palabras){
             char[] letras = palabra.toCharArray();
@@ -81,6 +89,7 @@ public class Start_Game extends AppCompatActivity {
         //Strat time
         StartTime();
     }
+
 
     private void SetLevel(Integer nivel) {
         switch (nivel){
@@ -145,6 +154,7 @@ public class Start_Game extends AppCompatActivity {
                         case "0":
                             lblLife.setText("Death");
                             startActivity(IntentGame_Over);
+                            Timer.cancel();
                             finish();
                             break;
                     }
@@ -173,6 +183,7 @@ public class Start_Game extends AppCompatActivity {
             IntentWiner.putExtra("LEVEL",(String) lblLevel.getText());
             IntentWiner.putExtra("LIFE",(String) lblLife.getText());
             IntentWiner.putExtra("TIME",(String) lblTime.getText());
+            IntentWiner.putExtra("PALABRA",(String) lblPalabra.getText());
             startActivity(IntentWiner);
             Timer.cancel();
             finish();

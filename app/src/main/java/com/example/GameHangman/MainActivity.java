@@ -20,14 +20,27 @@ public class MainActivity extends AppCompatActivity {
 
         switch (view.getId()){
             case R.id.btnStart:
-                Intent miItent = new Intent(this, Start_Game.class);
-                startActivity(miItent);
+                Intent StartGame = new Intent(this, Start_Game.class);
+                startActivity(StartGame);
+                finish();
                 break;
             case R.id.imgLogo:
                 Uri uri = Uri.parse("http://gcatcode.com");
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
+                Intent WebPage = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(WebPage);
+                onPause();
                 break;
+            case R.id.btnDiccionary:
+                Intent Diccionary = new Intent(this, CRUDPalabras.class);
+                startActivity(Diccionary);
+                finish();
+                break;
+            case  R.id.btnScore:
+                Intent ScoreView = new Intent(this, Scores.class);
+                startActivity(ScoreView);
+                finish();
+                break;
+                default:
         }
     }
 }
