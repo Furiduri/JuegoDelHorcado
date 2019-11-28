@@ -51,6 +51,7 @@ public class Scores extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),informacion,Toast.LENGTH_SHORT).show();
                 }
             });
+
         }else {
             Toast.makeText(getApplicationContext(),
                     "Sin Puntuaciones en la base de datos",Toast.LENGTH_SHORT).show();

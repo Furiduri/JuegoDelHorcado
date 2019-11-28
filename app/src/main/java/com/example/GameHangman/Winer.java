@@ -64,10 +64,9 @@ public class Winer extends AppCompatActivity {
                 finish();
                 break;
             case R.id.imgLogo:
-                Uri uri = Uri.parse("http://gcatcode.com");
-                miItent = new Intent(Intent.ACTION_VIEW, uri);
+                miItent = new Intent(this, MainActivity.class);
                 startActivity(miItent);
-                onPause();
+                finish();
                 break;
             case R.id.btnHome:
                  miItent = new Intent(this, MainActivity.class);

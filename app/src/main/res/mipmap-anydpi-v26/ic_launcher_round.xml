@@ -2,6 +2,6 @@
 <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
     <background android:drawable="@color/colorPrimaryDark" android:width="200dp"
         />
-    <foreground android:drawable="@drawable/gcatcode_cat"
+    <foreground android:drawable="@drawable/ic_confundido"
         android:gravity="center"/>
 </adaptive-icon>

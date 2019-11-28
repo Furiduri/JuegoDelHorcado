@@ -81,6 +81,33 @@ public class Utilidades {
         return ResID + ", Palabra: "+Palabra+", Dificultad: "+Level;
     }
 
+    //Eliminar palabra
+    public  static  String Del_Palabra( String Palabra , Context context){
+        String ID = "0";
+        //Creamos nuestra conexion
+        ConexionSQLite conn = new ConexionSQLite(context, null);
+        SQLiteDatabase db=conn.getWritableDatabase();
+        //Metodo insert para insertar datos en la tabla Words
+        try{
+            //Busca primero que no exista la palabra
+            Cursor cursor = db.rawQuery(" SELECT "+CAMPO_PK_Palabra+
+                            " FROM "+TABLE_Words+" WHERE "+CAMPO_Palabra+" LIKE '"+Palabra+"' "
+                    , null);
+            //Si existe retorna el ID y el nivel de la palabra
+            cursor.moveToFirst();
+            ID = cursor.getString(0);
+            cursor.close();
+            if( db.delete(TABLE_Words,CAMPO_PK_Palabra+" = "+ID,null) > 0){
+                return "Se elimino la palabra: "+Palabra;
+            }else {
+                return  "No se puede eliminar la palabra";
+            }
+
+        }catch (Exception e){
+            return  "Error: "+ e.getMessage();
+        }
+    }
+
     //Obtener Palabras
     public static ArrayList<ObjPalabra> GET_Palabras(Context context){
         ArrayList<ObjPalabra> ListaPalabras = new ArrayList<ObjPalabra>();

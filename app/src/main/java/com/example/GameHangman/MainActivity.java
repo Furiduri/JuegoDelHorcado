@@ -24,10 +24,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(StartGame);
                 break;
             case R.id.imgLogo:
-                Uri uri = Uri.parse("http://gcatcode.com");
-                Intent WebPage = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(WebPage);
-                onPause();
                 break;
             case R.id.btnDiccionary:
                 Intent Diccionary = new Intent(this, CRUDPalabras.class);

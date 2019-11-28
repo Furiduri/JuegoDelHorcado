@@ -25,9 +25,9 @@ public class ConexionSQLite extends SQLiteOpenHelper {
         //Datos por defecto de palabras
         ArrayList<ObjPalabra> lista = new ArrayList<ObjPalabra>();
         lista.add(new ObjPalabra(1,"Hola Mundo",2));
-        lista.add(new ObjPalabra(2,"Furiduri",1));
-        lista.add(new ObjPalabra(3,"Platano",1));
-        lista.add(new ObjPalabra(4,"La Vida Es Bella",3));
+        lista.add(new ObjPalabra(2,"La vida es bella",3));
+        lista.add(new ObjPalabra(3,"Sopa",1));
+        lista.add(new ObjPalabra(4,"Manzana",1));
         for (ObjPalabra palabra:lista
              ) {
             ContentValues Values = new ContentValues();

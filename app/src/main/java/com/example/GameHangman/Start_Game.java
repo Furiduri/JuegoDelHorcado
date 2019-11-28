@@ -5,7 +5,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.CountDownTimer;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -35,6 +37,7 @@ public class Start_Game extends AppCompatActivity {
     public EditText txtLetra;
     public Intent IntentGame_Over, IntentHOME ;
     public CountDownTimer Timer;
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +81,9 @@ public class Start_Game extends AppCompatActivity {
                 txtChart.setId(letra);
                 txtChart.setEnabled(false);
                 txtChart.setMaxEms(1);
-//                txtChart.setText(letra);
+                txtChart.setTextSize(30);
+                txtChart.setHint("*");
+                txtChart.setHintTextColor(getColor( R.color.colorPrimary));
             }
             if(Palabras.length > 0) {
                 TextView lblBlank = new TextView(getApplicationContext());

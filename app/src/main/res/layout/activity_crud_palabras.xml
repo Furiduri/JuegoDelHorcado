@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:accessibilityPaneTitle="Diccionario"
-    android:background="@color/colorAccent"
+    android:background="#E0F7FA"
     android:foregroundGravity="fill_horizontal"
     tools:context=".CRUDPalabras">
 

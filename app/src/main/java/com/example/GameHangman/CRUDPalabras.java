@@ -1,5 +1,6 @@
 package com.example.GameHangman;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,7 @@ public class CRUDPalabras extends AppCompatActivity {
     Button btnAddPalabra;
     ListView lvPalabras;
     ArrayList<ObjPalabra> ListaPalabras;
+    public static String pablabraTap = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +41,7 @@ public class CRUDPalabras extends AppCompatActivity {
     private void fnShowPalabras() {
         ListaPalabras =  Utilidades.GET_Palabras(this);
         if(!ListaPalabras.isEmpty()){
-            ArrayList<String> listaInformacion=new ArrayList<String>();
+            ArrayList<String> listaInformacion = new ArrayList<String>();
 
             for (int i=0; i<ListaPalabras.size();i++){
                 listaInformacion.add("ID: "+ListaPalabras.get(i).getID()+" - "
@@ -53,11 +55,20 @@ public class CRUDPalabras extends AppCompatActivity {
             lvPalabras.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                    String informacion="ID: "+ListaPalabras.get(pos).getID()+"\n";
-                    informacion+="Palabra: "+ListaPalabras.get(pos).getPalabra()+"\n";
-                    informacion+="Nivel: "+ListaPalabras.get(pos).getNivel()+"\n";
+                    String informacion= "";
+                    String palabra = ListaPalabras.get(pos).getPalabra();
+                    if (pablabraTap.equalsIgnoreCase(palabra)) {
+                        informacion = Utilidades.Del_Palabra(ListaPalabras.get(pos).getPalabra(), getApplicationContext());
+                        pablabraTap = "";
+                    }else {
+                        pablabraTap = ListaPalabras.get(pos).getPalabra();
+                        informacion = "ID: "+ListaPalabras.get(pos).getID()+
+                                "\n Palabra: "+ListaPalabras.get(pos).getPalabra()+
+                                "\n Dificultad: "+ListaPalabras.get(pos).getNivel();
+                    }
 
                     Toast.makeText(getApplicationContext(),informacion,Toast.LENGTH_SHORT).show();
+                    fnShowPalabras();
                 }
             });
         }else {
@@ -90,6 +101,8 @@ public class CRUDPalabras extends AppCompatActivity {
                Toast.makeText(getApplicationContext(),
                        "ID: "+ResID,
                        Toast.LENGTH_SHORT).show();
+               txtPalabra.setText("");
+               rbgLevel.clearCheck();
                fnShowPalabras();
             }else{
                 Toast.makeText(getApplicationContext(),"Favor de escribir la palabra y seleccionar una dificultad"
